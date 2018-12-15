@@ -3,11 +3,11 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import DeckScreen from '../screens/DeckScreen';
+import DecksScreen from '../screens/DecksScreen';
 import AddDeckScreen from '../screens/AddDeckScreen';
 
 const Decks = createStackNavigator({
-  Deck: DeckScreen,
+  Decks: DecksScreen,
 });
 
 Decks.navigationOptions = {
