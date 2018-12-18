@@ -10,9 +10,10 @@ export default class AddDeckScreen extends React.Component {
     text: '',
   }
 
-  navMain = () => {
-
+  submit = () => {
+    this.props.navigation.navigate('Deck')
   }
+
   render() {
     return (
       <View style={styles.container}>
@@ -26,7 +27,7 @@ export default class AddDeckScreen extends React.Component {
         />
         <TouchableOpacity
           style={styles.submitButton}
-          onPress={this.navMain}
+          onPress={this.submit}
           title="Create Deck"
           color="#fff"
           accessibilityLabel="Create Deck">

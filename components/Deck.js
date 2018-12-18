@@ -1,14 +1,17 @@
 import React from 'react';
-import { View, StyleSheet, Text  } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Icon } from 'expo';
+import { withNavigation } from 'react-navigation';
 
-export default class AddDeckScreen extends React.Component {
+class Deck extends React.Component {
+
   navDeckScreen = () => {
-
+    this.props.navigation.navigate('Deck')
   }
+
   render() {
     return (
-      <View style={styles.container} onPress={this.navDeckScreen}>
+      <TouchableOpacity style={styles.container} onPress={this.navDeckScreen}>
         <View>
           <Text style={styles.title}>Spanish</Text>
           <Text style={styles.cards}>30 Cards</Text>
@@ -19,7 +22,7 @@ export default class AddDeckScreen extends React.Component {
             size={22}
           />
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
@@ -49,3 +52,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   }
 });
+
+export default withNavigation(Deck)
