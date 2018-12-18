@@ -6,16 +6,20 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 import Deck from '../components/Deck'
+import { HeaderBackButton } from 'react-navigation';
 
 export default class QuestionScreen extends React.Component {
-  static navigationOptions = {
+
+ static navigationOptions = ({navigate, navigation}) => ({ 
     title: 'Spanish',
-  };
+    headerLeft: <HeaderBackButton title="Deck" onPress={()=>{ navigation.navigate('Deck'); }} />,
+  });
 
   answer = () => {
     this.props.navigation.navigate('Answer')

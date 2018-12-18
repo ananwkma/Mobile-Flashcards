@@ -11,11 +11,14 @@ import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 import Deck from '../components/Deck'
+import { HeaderBackButton } from 'react-navigation';
 
 export default class DecksScreen extends React.Component {
-  static navigationOptions = {
+  
+  static navigationOptions = ({navigate, navigation}) => ({ 
     title: 'Spanish',
-  };
+    headerLeft: <HeaderBackButton title="Back" onPress={()=>{ navigation.navigate('Decks'); }} />,
+  });
 
   startQuiz = () => {
     this.props.navigation.navigate('Question')
