@@ -6,12 +6,14 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  AsyncStorage,
+  TextInput,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
 import { MonoText } from '../components/StyledText';
 import Deck from '../components/Deck'
 import { HeaderBackButton } from 'react-navigation';
+import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
 
 export default class AddCardScreen extends React.Component {
   
@@ -20,7 +22,18 @@ export default class AddCardScreen extends React.Component {
     headerLeft: <HeaderBackButton title="Deck" onPress={()=>{ navigation.navigate('Deck'); }} />,
   });
 
-  answer = () => {
+  state = {
+    question: '',
+    answer: '',
+  }
+
+  add = () => {
+    let card = {
+      question: this.state.question,
+      answer: this.state.answer,
+    }
+    AsyncStorage.setItem('card', JSON.stringify(card))
+
     this.props.navigation.navigate('Decks')
   }
 
@@ -29,9 +42,23 @@ export default class AddCardScreen extends React.Component {
       <View style={styles.container}>
         <Text style={styles.title}>Add Card</Text>
         <View style={styles.contentContainer}>
+          <TextInput
+            style={styles.textBox}
+            onChangeText={(question) => this.setState({question})}
+            value={this.state.question}
+            placeholder = "Question"
+            placeholderTextColor = 'rgba(0,0,0,0.4)'
+          />
+          <TextInput
+            style={styles.textBox}
+            onChangeText={(answer) => this.setState({answer})}
+            value={this.state.answer}
+            placeholder = "Answer"
+            placeholderTextColor = 'rgba(0,0,0,0.4)'
+          />
           <TouchableOpacity
             style={styles.button}
-            onPress={this.answer}
+            onPress={this.add}
             title="Answer"
             color="#fff"
             accessibilityLabel="Answer">
@@ -46,31 +73,31 @@ export default class AddCardScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#26afff',
+    backgroundColor: lightBlue,
     paddingTop: 100,
   },
   contentContainer: {
-    paddingTop: 250,
+    paddingTop: 220,
     alignItems: 'center',
   },  
   title: {
-    color: 'white',
+    color: white,
     fontSize: 40,
     textAlign: 'center',
     fontWeight: 'bold',
   },
   subtitle: {
-    color: 'rgba(255,255,255,0.7)',
+    color: darkGray,
     fontSize: 20,
     padding: 10,
     textAlign: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: white,
     textAlign:'center',
   },
   button: {
-    backgroundColor: '#214999',
+    backgroundColor: darkBlue,
     margin: 10,
     height: 45,
     width: 270,
@@ -79,7 +106,18 @@ const styles = StyleSheet.create({
   },
   deleteButtonText: {
     paddingTop: 30,
-    color: '#fff',
+    color: white,
     textAlign:'center',
-  }
+  },
+  textBox: {
+    height: 40,
+    borderColor: darkGray,
+    borderWidth: 1,
+    backgroundColor: white,
+    margin: 5,
+    width: 270,
+    height: 45,
+    paddingLeft: 10,
+    borderRadius: 8,
+  },
 });

@@ -7,12 +7,13 @@ import {
   Text,
   TouchableOpacity,
   Button,
+  AsyncStorage,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
 import { MonoText } from '../components/StyledText';
 import Deck from '../components/Deck'
 import { HeaderBackButton } from 'react-navigation';
+import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
 
 export default class QuestionScreen extends React.Component {
 
@@ -21,8 +22,24 @@ export default class QuestionScreen extends React.Component {
     headerLeft: <HeaderBackButton title="Deck" onPress={()=>{ navigation.navigate('Deck'); }} />,
   });
 
+  state = {
+    question: 'question',
+    answer: 'answer'
+  }
+
   answer = () => {
     this.props.navigation.navigate('Answer')
+  }
+
+  displayData = async () => {
+    try {
+      let card = await AsyncStorage.getItem('card')
+      let parsed = JSON.parse(card)
+      this.setState(() => ({question: parsed.question, answer: parsed.answer}))
+    }
+    catch(error) {
+      alert(error)
+    }
   }
 
   render() {
@@ -38,7 +55,12 @@ export default class QuestionScreen extends React.Component {
             color="#fff"
             accessibilityLabel="Answer">
             <Text style={styles.buttonText}>Answer</Text>
+          </TouchableOpacity>         
+          <TouchableOpacity onPress={this.displayData}>
+            <Text>SHOWSHOWSHOWSHOW</Text>
           </TouchableOpacity>
+        <Text style={styles.subtitle}>{this.state.question}</Text>
+        <Text style={styles.subtitle}>{this.state.answer}</Text>
         </View>
       </View>
     );
@@ -48,31 +70,31 @@ export default class QuestionScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#26afff',
+    backgroundColor: lightBlue,
     paddingTop: 100,
   },
   contentContainer: {
-    paddingTop: 250,
+    //paddingTop: 250,
     alignItems: 'center',
   },  
   title: {
-    color: 'white',
+    color: white,
     fontSize: 40,
     textAlign: 'center',
     fontWeight: 'bold',
   },
   subtitle: {
-    color: 'rgba(255,255,255,0.7)',
+    color: darkGray,
     fontSize: 20,
     padding: 10,
     textAlign: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: white,
     textAlign:'center',
   },
   button: {
-    backgroundColor: '#214999',
+    backgroundColor: darkBlue,
     margin: 10,
     height: 45,
     width: 270,
@@ -81,7 +103,7 @@ const styles = StyleSheet.create({
   },
   deleteButtonText: {
     paddingTop: 30,
-    color: '#fff',
+    color: white,
     textAlign:'center',
   }
 });
