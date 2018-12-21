@@ -3,8 +3,11 @@ import { View, StyleSheet, Text, TextInput, TouchableOpacity, AsyncStorage } fro
 import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
 import { HeaderBackButton } from 'react-navigation';
 import { addDeck } from '../actions'
+import { timeToString } from '../utils/helpers'
+import { submitEntry } from '../utils/api'
+import { connect } from 'react-redux'
 
-export default class AddDeckScreen extends React.Component {
+class AddDeckScreen extends React.Component {
 
   static navigationOptions = ({navigate, navigation}) => ({ 
     title: 'Add Deck',
@@ -16,10 +19,17 @@ export default class AddDeckScreen extends React.Component {
   }
 
   submit = () => {
-    let deck = {
-      deckName: this.state.deckName,
-    }
-    AsyncStorage.setItem('deck', JSON.stringify(deck))
+    const key = timeToString()
+    const entry = this.state
+
+    this.props.dispatch(addDeck({
+      [key]: this.state.deckName
+    }))
+
+    submitEntry({ key, entry })
+
+    this.setState({deckName: ''})
+
     this.props.navigation.navigate('Decks')
   }
 
@@ -82,3 +92,11 @@ const styles = StyleSheet.create({
     textAlign:'center',
   },
 });
+
+function mapStateToProps (state) {
+
+  return {
+  }
+} 
+
+export default connect(mapStateToProps)(AddDeckScreen)

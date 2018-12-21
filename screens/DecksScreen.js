@@ -15,14 +15,20 @@ import Deck from '../components/Deck'
 import { HeaderBackButton } from 'react-navigation';
 import { lightBlue} from '../utils/colors'
 import { receiveDecks } from '../actions'
+import { getDecks } from '../utils/api'
 
-export default class DecksScreen extends React.Component {
+class DecksScreen extends React.Component {
+
   static navigationOptions = {
     title: 'Decks',
   };
 
-  getDecks = () => {
-    this.props.dispatch(receiveDecks)
+  componentDidMount () {
+    getDecks()
+    .then((entries) => {
+      this.props.dispatch(receiveDecks(entries))
+    })
+    console.log("reached")
   }
 
   // displayData = async () => {
@@ -40,7 +46,7 @@ export default class DecksScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          {this.getDecks}
+          {this.getDecksFromStore}
           <Deck/>
           <Deck/>
         </ScrollView>
@@ -58,3 +64,5 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
 });
+
+export default DecksScreen

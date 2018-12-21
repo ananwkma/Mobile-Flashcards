@@ -9,7 +9,7 @@ class Deck extends React.Component {
   state = {
     deckName: ''
   }
-  
+
   componentDidMount () {
     this.displayData()
   }
@@ -22,6 +22,9 @@ class Deck extends React.Component {
     try {
       let deck = await AsyncStorage.getItem('deck')
       let parsed = JSON.parse(deck)
+      // AsyncStorage.mergeItem(CALENDAR_STORAGE_KEY, JSON.stringify({
+      //   [key]: entry
+      // }))
       this.setState(() => ({deckName: parsed.deckName}))
     }
     catch(error) {
