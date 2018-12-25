@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity, AsyncStorage } from 'react-na
 import { Icon } from 'expo';
 import { withNavigation } from 'react-navigation';
 import { white, lightGray, black, gray } from '../utils/colors'
+import { connect } from 'react-redux'
 
 class Deck extends React.Component {
 
@@ -10,42 +11,28 @@ class Deck extends React.Component {
     deckName: ''
   }
 
-  componentDidMount () {
-    this.displayData()
-  }
-
   navDeckScreen = () => {
+    console.log("testoutput ", this.props.navigation)
     this.props.navigation.navigate('Deck')
   }
 
-  displayData = async () => {
-    try {
-      let deck = await AsyncStorage.getItem('deck')
-      let parsed = JSON.parse(deck)
-      // AsyncStorage.mergeItem(CALENDAR_STORAGE_KEY, JSON.stringify({
-      //   [key]: entry
-      // }))
-      this.setState(() => ({deckName: parsed.deckName}))
-    }
-    catch(error) {
-      alert(error)
-    }
-  }
-
   render() {
+    const myDecks = this.props.nameArray
     return (
-      <TouchableOpacity style={styles.container} onPress={this.navDeckScreen}>
-        <View>
-          <Text style={styles.title}>{this.state.deckName}</Text>
-          <Text style={styles.cards}>30 Cards</Text>
-        </View> 
-        <View style={styles.arrow}>
-          <Icon.Ionicons
-            name={'ios-arrow-forward'}
-            size={22}
-          />
-        </View>
-      </TouchableOpacity>
+      myDecks.map((name,key) => (
+        <TouchableOpacity style={styles.container} onPress={this.navDeckScreen} key={key}>
+          <View>
+            <Text style={styles.title}>{name}</Text>
+            <Text style={styles.cards}>30 Cards</Text>
+          </View> 
+          <View style={styles.arrow}>
+            <Icon.Ionicons
+              name={'ios-arrow-forward'}
+              size={22}
+            />
+          </View>
+        </TouchableOpacity>
+      ))    
     );
   }
 }
@@ -76,4 +63,16 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(Deck)
+//export default withNavigation(Deck)
+
+function mapStateToProps (state) {
+  const entries = state
+  let nameArray = Object.values(entries)
+  let keyArray = Object.keys(entries)
+  return {
+    nameArray: nameArray,
+    keyArray: keyArray,
+  }
+} 
+
+export default withNavigation (connect(mapStateToProps)(Deck))
