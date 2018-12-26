@@ -8,11 +8,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
 import { MonoText } from '../components/StyledText';
 import Deck from '../components/Deck'
 import { HeaderBackButton } from 'react-navigation';
-
 import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
 
 export default class DecksScreen extends React.Component {

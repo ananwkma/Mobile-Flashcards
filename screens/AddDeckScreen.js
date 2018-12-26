@@ -16,19 +16,27 @@ class AddDeckScreen extends React.Component {
 
   state = {
     deckName: '',
+    key: '',
+    cards: [],
+  }
+
+  componentDidMount () {
+    const key = timeToString()
+    this.setState({key: key})
   }
 
   submit = () => {
-    const key = timeToString()
     const entry = this.state
+    const key = this.state.key
+    console.log('whatsthekey ', key)
 
     this.props.dispatch(addDeck({
-      [key]: this.state.deckName
+      [key]: this.state
     }))
 
     submitEntry({ key, entry })
 
-    this.setState({deckName: ''})
+    this.setState({deckName: '', key: ''})
 
     this.props.navigation.navigate('Decks')
   }

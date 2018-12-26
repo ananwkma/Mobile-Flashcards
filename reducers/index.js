@@ -1,6 +1,7 @@
-import { RECEIVE_DECKS, ADD_DECK } from '../actions'
+import { RECEIVE_DECKS, ADD_DECK, SET_DECK, REMOVE_DECK } from '../actions'
 
 function decks (state = [], action) {
+	console.log("setdecktest ", action.deck)
 	switch (action.type) {
 		case RECEIVE_DECKS :
 			return {
@@ -11,6 +12,14 @@ function decks (state = [], action) {
 			return {
 				...state,
 				...action.deck
+			}
+		case SET_DECK :
+			return {
+				...action.deck
+			}
+		case REMOVE_DECK : 
+			return {
+
 			}
 		default :
 			return state

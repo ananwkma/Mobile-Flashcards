@@ -4,27 +4,40 @@ import { Icon } from 'expo';
 import { withNavigation } from 'react-navigation';
 import { white, lightGray, black, gray } from '../utils/colors'
 import { connect } from 'react-redux'
+import { setDeck, removeDeck } from '../actions'
+import { removeEntry } from '../utils/api'
 
 class Deck extends React.Component {
 
-  state = {
-    deckName: ''
+  navDeckScreen = (e,key) => {
+    console.log("testoutput ", this.props.rawObject.find(item => console.log("itemkey ",(item))))
+    const myDeck = this.props.rawObject.find(item => Object.keys(item) === key)
+    console.log("mydeck ", myDeck)
+    console.log("mykey ", key)
+    this.props.dispatch(setDeck())
+    this.props.navigation.navigate('Deck')
   }
 
-  navDeckScreen = () => {
-    console.log("testoutput ", this.props.navigation)
-    this.props.navigation.navigate('Deck')
+  deleteMe = () => {
+    //removeEntry('12/25/2018, 5:40:36 PM')
   }
 
   render() {
     const myDecks = this.props.nameArray
     return (
       myDecks.map((name,key) => (
-        <TouchableOpacity style={styles.container} onPress={this.navDeckScreen} key={key}>
+        <TouchableOpacity style={styles.container} onPress={(e)=>this.navDeckScreen(e,key)} key={key}>
           <View>
             <Text style={styles.title}>{name}</Text>
             <Text style={styles.cards}>30 Cards</Text>
           </View> 
+          <TouchableOpacity style={styles.delete} onPress={this.deleteMe}>
+                      <View>
+                        <Text>
+                          Delete Me
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
           <View style={styles.arrow}>
             <Icon.Ionicons
               name={'ios-arrow-forward'}
@@ -60,17 +73,24 @@ const styles = StyleSheet.create({
   },
   arrow: {
     justifyContent: 'center',
+  },
+  delete: {
+    backgroundColor: 'red',
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
   }
 });
 
-//export default withNavigation(Deck)
-
 function mapStateToProps (state) {
-  const entries = state
-  let nameArray = Object.values(entries)
-  let keyArray = Object.keys(entries)
+  const deckList = state
+  const deckListArray = Object.values(deckList)
+  const deckNames = deckListArray.map((d) => d.deckName)
+  //let nameArray = Object.values(deckNames)
+  let keyArray = Object.keys(deckList)
+  console.log('abcdtest ', deckList)
   return {
-    nameArray: nameArray,
+    rawObject: deckListArray,
+    nameArray: deckNames,
     keyArray: keyArray,
   }
 } 

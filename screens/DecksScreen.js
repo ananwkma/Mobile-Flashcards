@@ -30,18 +30,10 @@ class DecksScreen extends React.Component {
     })
   }
 
-  initialize () {
-    getDecks()
-    .then((entries) => {
-      this.props.dispatch(receiveDecks(entries))
-    })
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          {this.initialize}
           <Deck/>
         </ScrollView>
       </View>

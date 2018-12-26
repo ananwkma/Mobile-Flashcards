@@ -8,16 +8,16 @@ export function getDecks () {
 }
 
 export function submitEntry ({ entry, key }) {
-  console.log('entry ', entry)
-  console.log('key ', key)
   return AsyncStorage.mergeItem(DECKS_KEY, JSON.stringify({
     [key]: entry
   }))
 }
 
 export function removeEntry (key) {
+      console.log("123456789876543234567875")
   return AsyncStorage.getItem(DECKS_KEY)
     .then((results) => {
+      console.log("asdfghjkqwertyuioxcvbdfghjkl")
       const data = JSON.parse(results)
       data[key] = undefined
       delete data[key]
