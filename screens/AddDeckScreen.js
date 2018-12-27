@@ -28,7 +28,6 @@ class AddDeckScreen extends React.Component {
   submit = () => {
     const entry = this.state
     const key = this.state.key
-    console.log('whatsthekey ', key)
 
     this.props.dispatch(addDeck({
       [key]: this.state

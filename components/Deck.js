@@ -5,16 +5,15 @@ import { withNavigation } from 'react-navigation';
 import { white, lightGray, black, gray } from '../utils/colors'
 import { connect } from 'react-redux'
 import { setDeck, removeDeck } from '../actions'
-import { removeEntry } from '../utils/api'
+import { removeEntry, setCurrentDeck } from '../utils/api'
 
 class Deck extends React.Component {
 
   navDeckScreen = (e,key) => {
-    console.log("testoutput ", this.props.rawObject.find(item => console.log("itemkey ",(item))))
-    const myDeck = this.props.rawObject.find(item => Object.keys(item) === key)
-    console.log("mydeck ", myDeck)
-    console.log("mykey ", key)
-    this.props.dispatch(setDeck())
+    //this.props.rawObject.find(item => console.log("itemkey ", item.key))
+    const myDeck = this.props.rawObject.find(item => item.key === key)
+    this.props.dispatch(setDeck(myDeck))
+    setCurrentDeck({ key })
     this.props.navigation.navigate('Deck')
   }
 
@@ -23,12 +22,12 @@ class Deck extends React.Component {
   }
 
   render() {
-    const myDecks = this.props.nameArray
+    const myDecks = this.props.rawObject
     return (
-      myDecks.map((name,key) => (
-        <TouchableOpacity style={styles.container} onPress={(e)=>this.navDeckScreen(e,key)} key={key}>
+      myDecks.map((deck) => (
+        <TouchableOpacity style={styles.container} onPress={(e)=>this.navDeckScreen(e,deck.key)} key={deck.key}>
           <View>
-            <Text style={styles.title}>{name}</Text>
+            <Text style={styles.title}>{deck.deckName}</Text>
             <Text style={styles.cards}>30 Cards</Text>
           </View> 
           <TouchableOpacity style={styles.delete} onPress={this.deleteMe}>
@@ -82,12 +81,12 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps (state) {
-  const deckList = state
+  const deckList = state.decks
   const deckListArray = Object.values(deckList)
   const deckNames = deckListArray.map((d) => d.deckName)
   //let nameArray = Object.values(deckNames)
   let keyArray = Object.keys(deckList)
-  console.log('abcdtest ', deckList)
+  console.log('whatswrongwithmydecks ', deckList)
   return {
     rawObject: deckListArray,
     nameArray: deckNames,

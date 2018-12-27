@@ -12,8 +12,9 @@ import { MonoText } from '../components/StyledText';
 import Deck from '../components/Deck'
 import { HeaderBackButton } from 'react-navigation';
 import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
+import { connect } from 'react-redux'
 
-export default class DecksScreen extends React.Component {
+class DeckScreen extends React.Component {
   
   static navigationOptions = ({navigate, navigation}) => ({ 
     title: 'Spanish',
@@ -107,3 +108,16 @@ const styles = StyleSheet.create({
     textAlign:'center',
   }
 });
+
+function mapStateToProps (state) {
+  const deckList = state.decks
+  console.log('CHECKDECKLIST ', deckList)
+  // const deckListArray = Object.values(deckList)
+  // const deckNames = deckListArray.map((d) => d.deckName)
+  //let nameArray = Object.values(deckNames)
+  //let keyArray = Object.keys(deckList)
+  return {
+  }
+} 
+
+export default connect(mapStateToProps)(DeckScreen)

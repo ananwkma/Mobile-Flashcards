@@ -4,7 +4,6 @@ export const SET_DECK = 'SET_DECK'
 export const REMOVE_DECK = 'REMOVE_DECK'
 
 export function receiveDecks (decks) {
-		console.log('receivedeckstest ', decks)
 	return {
 		type: RECEIVE_DECKS,
 		decks,
@@ -19,7 +18,6 @@ export function addDeck (deck) {
 }
 
 export function setDeck (deck) {
-		console.log('actionstest ', deck)
 	return {
 		type: SET_DECK,
 		deck,
