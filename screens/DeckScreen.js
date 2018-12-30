@@ -36,8 +36,8 @@ class DeckScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Spanish</Text>
-        <Text style={styles.subtitle}>30 Cards</Text>
+        <Text style={styles.title}>{this.props.myDeck.deckName}</Text>
+        <Text style={styles.subtitle}>{this.props.myDeck.cards.length} Cards</Text>
         <View style={styles.contentContainer}>
           <TouchableOpacity
             style={styles.button}
@@ -110,13 +110,9 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps (state) {
-  const deckList = state.decks
-  console.log('CHECKDECKLIST ', deckList)
-  // const deckListArray = Object.values(deckList)
-  // const deckNames = deckListArray.map((d) => d.deckName)
-  //let nameArray = Object.values(deckNames)
-  //let keyArray = Object.keys(deckList)
+  const myDeck = state.currentDeck
   return {
+    myDeck: myDeck
   }
 } 
 

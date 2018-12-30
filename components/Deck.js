@@ -10,7 +10,6 @@ import { removeEntry, setCurrentDeck } from '../utils/api'
 class Deck extends React.Component {
 
   navDeckScreen = (e,key) => {
-    //this.props.rawObject.find(item => console.log("itemkey ", item.key))
     const myDeck = this.props.rawObject.find(item => item.key === key)
     this.props.dispatch(setDeck(myDeck))
     setCurrentDeck({ key })
@@ -28,7 +27,7 @@ class Deck extends React.Component {
         <TouchableOpacity style={styles.container} onPress={(e)=>this.navDeckScreen(e,deck.key)} key={deck.key}>
           <View>
             <Text style={styles.title}>{deck.deckName}</Text>
-            <Text style={styles.cards}>30 Cards</Text>
+            <Text style={styles.cards}>{deck.cards.length} Cards</Text>
           </View> 
           <TouchableOpacity style={styles.delete} onPress={this.deleteMe}>
                       <View>
@@ -84,7 +83,6 @@ function mapStateToProps (state) {
   const deckList = state.decks
   const deckListArray = Object.values(deckList)
   const deckNames = deckListArray.map((d) => d.deckName)
-  //let nameArray = Object.values(deckNames)
   let keyArray = Object.keys(deckList)
   console.log('whatswrongwithmydecks ', deckList)
   return {
