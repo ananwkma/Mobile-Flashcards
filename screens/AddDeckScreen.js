@@ -1,17 +1,43 @@
 import React from 'react';
-import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
+import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
+import { HeaderBackButton } from 'react-navigation';
+import { addDeck } from '../actions'
+import { timeToString } from '../utils/helpers'
+import { submitEntry } from '../utils/api'
+import { connect } from 'react-redux'
 
-export default class AddDeckScreen extends React.Component {
-  static navigationOptions = {
+class AddDeckScreen extends React.Component {
+
+  static navigationOptions = ({navigate, navigation}) => ({ 
     title: 'Add Deck',
-  };
+    headerLeft: <HeaderBackButton title="Back" onPress={()=>{ navigation.navigate('Decks'); }} />,
+  });
 
   state = {
-    text: '',
+    deckName: '',
+    key: '',
+    cards: [],
+  }
+
+  componentDidMount () {
+    const key = timeToString()
+    this.setState({key: key})
   }
 
   submit = () => {
-    this.props.navigation.navigate('Deck')
+    const entry = this.state
+    const key = this.state.key
+
+    this.props.dispatch(addDeck({
+      [key]: this.state
+    }))
+
+    submitEntry({ key, entry })
+
+    this.setState({deckName: '', key: ''})
+
+    this.props.navigation.navigate('Decks')
   }
 
   render() {
@@ -20,8 +46,8 @@ export default class AddDeckScreen extends React.Component {
         <Text style={styles.title}>What is the title of your new deck?</Text>
         <TextInput
           style={styles.textBox}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
+          onChangeText={(deckName) => this.setState({deckName})}
+          value={this.state.deckName}
           placeholder = "Deck Name"
           placeholderTextColor = 'rgba(0,0,0,0.4)'
         />
@@ -33,6 +59,7 @@ export default class AddDeckScreen extends React.Component {
           accessibilityLabel="Create Deck">
           <Text style={styles.submitText}>Create Deck</Text>
         </TouchableOpacity>
+        <Text style={styles.title}>{this.state.deckName}</Text>
       </View>
     );
   }
@@ -42,10 +69,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    backgroundColor: '#26afff',
+    backgroundColor: lightBlue,
   },
   title: {
-    color: 'white',
+    color: white,
     fontSize: 30,
     padding: 20,
     textAlign: 'center',
@@ -53,22 +80,30 @@ const styles = StyleSheet.create({
   },
   textBox: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: darkGray,
     borderWidth: 1,
-    backgroundColor: 'white',
+    backgroundColor: white,
     margin: 30,
     paddingLeft: 10,
     borderRadius: 8,
   },
   submitButton: {
-    backgroundColor: '#214999',
+    backgroundColor: darkBlue,
     margin: 80,
     height: 45,
     justifyContent: 'center',
     borderRadius: 8,
   },
   submitText: {
-    color: '#fff',
+    color: white,
     textAlign:'center',
   },
 });
+
+function mapStateToProps (state) {
+
+  return {
+  }
+} 
+
+export default connect(mapStateToProps)(AddDeckScreen)

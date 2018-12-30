@@ -12,27 +12,29 @@ import MainTabNavigator from './MainTabNavigator';
 const Deck = createStackNavigator({
   Deck: DeckScreen,
 });
-const Results = createStackNavigator({
-  Results: ResultsScreen,
-});
-const Answer = createStackNavigator({
-  Answer: AnswerScreen,
-});
+
 const Question = createStackNavigator({
   Question: QuestionScreen,
 });
+
+const Answer = createStackNavigator({
+  Answer: AnswerScreen,
+});
+
+const Results = createStackNavigator({
+  Results: ResultsScreen,
+});
+
 const AddCard = createStackNavigator({
   AddCard: AddCardScreen,
 });
 
 
 export default createSwitchNavigator({
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
   Main: MainTabNavigator,
   Deck,
-  Results,
-  Answer,
   Question,
+  Answer,
+  Results,
   AddCard,
 });

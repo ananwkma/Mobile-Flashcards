@@ -8,12 +8,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
 import { MonoText } from '../components/StyledText';
 import Deck from '../components/Deck'
 import { HeaderBackButton } from 'react-navigation';
+import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
+import { connect } from 'react-redux'
 
-export default class DecksScreen extends React.Component {
+class DeckScreen extends React.Component {
   
   static navigationOptions = ({navigate, navigation}) => ({ 
     title: 'Spanish',
@@ -35,8 +36,8 @@ export default class DecksScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Spanish</Text>
-        <Text style={styles.subtitle}>30 Cards</Text>
+        <Text style={styles.title}>{this.props.myDeck.deckName}</Text>
+        <Text style={styles.subtitle}>{this.props.myDeck.cards.length} Cards</Text>
         <View style={styles.contentContainer}>
           <TouchableOpacity
             style={styles.button}
@@ -70,7 +71,7 @@ export default class DecksScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#26afff',
+    backgroundColor: lightBlue,
     paddingTop: 100,
   },
   contentContainer: {
@@ -78,23 +79,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },  
   title: {
-    color: 'white',
+    color: white,
     fontSize: 40,
     textAlign: 'center',
     fontWeight: 'bold',
   },
   subtitle: {
-    color: 'rgba(255,255,255,0.7)',
+    color: darkGray,
     fontSize: 20,
     padding: 10,
     textAlign: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: white,
     textAlign:'center',
   },
   button: {
-    backgroundColor: '#214999',
+    backgroundColor: darkBlue,
     margin: 10,
     height: 45,
     width: 270,
@@ -103,7 +104,16 @@ const styles = StyleSheet.create({
   },
   deleteButtonText: {
     paddingTop: 30,
-    color: '#fff',
+    color: white,
     textAlign:'center',
   }
 });
+
+function mapStateToProps (state) {
+  const myDeck = state.currentDeck
+  return {
+    myDeck: myDeck
+  }
+} 
+
+export default connect(mapStateToProps)(DeckScreen)
