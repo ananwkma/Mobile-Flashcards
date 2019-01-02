@@ -1,6 +1,5 @@
 import { INITIALIZE_SCORE, INCREMENT_SCORE } from '../actions'
 
-
 function score (state = [], action) {
 	switch (action.type) {
 		case INITIALIZE_SCORE : {
@@ -10,8 +9,6 @@ function score (state = [], action) {
 			}
 		}
 		case INCREMENT_SCORE : {
-			console.log('state', state)
-			console.log('action', action)
 			return {
 				...state,
 				score : {

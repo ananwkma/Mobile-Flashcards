@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native'
 import { DECKS_KEY, getDeckNames } from './_deck'
-import { SCORE_KEY, getScore } from './_score'
+import { SCORE_KEY } from './_score'
 
 export function getDecks () {
   return AsyncStorage.getItem(DECKS_KEY)

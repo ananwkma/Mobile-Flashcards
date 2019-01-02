@@ -32,10 +32,8 @@ class AnswerScreen extends React.Component {
   }
 
   answer = (value) => {
-    console.log('value', value)
     const curDeck = this.props.myDeck
     const curScore = this.props.myScore
-    //code to update this.props.score.correct
     this.props.dispatch(incrementScore({
       value
     }))
@@ -118,7 +116,6 @@ const styles = StyleSheet.create({
 function mapStateToProps (state) {
   const myDeck = state.currentDeck
   const myScore = state.score
-  console.log('thescore ', myScore)
   return {
     myDeck: myDeck,
     myScore: myScore,

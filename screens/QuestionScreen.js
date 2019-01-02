@@ -23,22 +23,6 @@ class QuestionScreen extends React.Component {
     headerLeft: <HeaderBackButton title="Deck" onPress={()=>{ navigation.navigate('Deck'); }} />,
   });
 
-  // state = {
-  //   question: 'question',
-  //   answer: 'answer'
-  // }
-
-  // displayData = async () => {
-  //   try {
-  //     let card = await AsyncStorage.getItem('card')
-  //     let parsed = JSON.parse(card)
-  //     this.setState(() => ({question: parsed.question, answer: parsed.answer}))
-  //   }
-  //   catch(error) {
-  //     alert(error)
-  //   }
-  // }
-
   answer = () => {
     this.props.navigation.navigate('Answer')
   }
