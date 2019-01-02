@@ -34,7 +34,8 @@ class DeckScreen extends React.Component {
     }
     this.props.dispatch(initializeScore({ score }))
     initScore({ score })
-    this.props.navigation.navigate('Question')
+    console.log('lalala',this.state.curDeck.cards.length)
+    if(this.state.curDeck.cards.length !== 0)this.props.navigation.navigate('Question')
   }
 
   addCard = () => {
