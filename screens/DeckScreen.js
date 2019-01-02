@@ -13,16 +13,27 @@ import Deck from '../components/Deck'
 import { HeaderBackButton } from 'react-navigation';
 import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
 import { connect } from 'react-redux'
-import { removeEntry } from '../utils/api'
+import { removeEntry, initScore } from '../utils/api'
+import { initializeScore } from '../actions'
 
 class DeckScreen extends React.Component {
   
+  state = {
+    curDeck: this.props.myDeck
+  }
+
   static navigationOptions = ({navigate, navigation}) => ({ 
     title: 'Spanish',
     headerLeft: <HeaderBackButton title="Back" onPress={()=>{ navigation.navigate('Decks'); }} />,
   });
 
   startQuiz = () => {
+    score = {
+      cardIdx: 0,
+      correct: 0,
+    }
+    this.props.dispatch(initializeScore({ score }))
+    initScore({ score })
     this.props.navigation.navigate('Question')
   }
 
@@ -36,11 +47,13 @@ class DeckScreen extends React.Component {
   }
 
   render() {
+    //const curDeck = this.props.myDeck
+    //console.log('decklength ', this.state.curDeck)
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>{this.props.myDeck.deckName}</Text>
-        <Text style={styles.subtitle}>{this.props.myDeck.cards.length} Cards</Text>
-        <View style={styles.contentContainer}>
+        <Text style={styles.title}>{this.state.curDeck.deckName}</Text>
+        <Text style={styles.subtitle}>{this.state.curDeck.cards.length} Cards</Text>
+        <View style={styles.contentContainer}>          
           <TouchableOpacity
             style={styles.button}
             onPress={this.startQuiz}

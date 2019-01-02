@@ -14,39 +14,42 @@ import { MonoText } from '../components/StyledText';
 import Deck from '../components/Deck'
 import { HeaderBackButton } from 'react-navigation';
 import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
+import { connect } from 'react-redux'
 
-export default class QuestionScreen extends React.Component {
+class QuestionScreen extends React.Component {
 
  static navigationOptions = ({navigate, navigation}) => ({ 
     title: 'Spanish',
     headerLeft: <HeaderBackButton title="Deck" onPress={()=>{ navigation.navigate('Deck'); }} />,
   });
 
-  state = {
-    question: 'question',
-    answer: 'answer'
-  }
+  // state = {
+  //   question: 'question',
+  //   answer: 'answer'
+  // }
+
+  // displayData = async () => {
+  //   try {
+  //     let card = await AsyncStorage.getItem('card')
+  //     let parsed = JSON.parse(card)
+  //     this.setState(() => ({question: parsed.question, answer: parsed.answer}))
+  //   }
+  //   catch(error) {
+  //     alert(error)
+  //   }
+  // }
 
   answer = () => {
     this.props.navigation.navigate('Answer')
   }
 
-  displayData = async () => {
-    try {
-      let card = await AsyncStorage.getItem('card')
-      let parsed = JSON.parse(card)
-      this.setState(() => ({question: parsed.question, answer: parsed.answer}))
-    }
-    catch(error) {
-      alert(error)
-    }
-  }
-
   render() {
+    const curDeck = this.props.myDeck
+    const curScore = this.props.myScore
     return (
       <View style={styles.container}>
-        <Text style={styles.subtitle}>1/30</Text>
-        <Text style={styles.title}>How do you say "shirt"?</Text>
+        <Text style={styles.subtitle}>{curScore.score.cardIdx+1}/{curDeck.cards.length}</Text>
+        <Text style={styles.title}>{curDeck.cards[curScore.score.cardIdx].question}</Text>
         <View style={styles.contentContainer}>
           <TouchableOpacity
             style={styles.button}
@@ -56,11 +59,6 @@ export default class QuestionScreen extends React.Component {
             accessibilityLabel="Answer">
             <Text style={styles.buttonText}>Answer</Text>
           </TouchableOpacity>         
-          <TouchableOpacity onPress={this.displayData}>
-            <Text>SHOWSHOWSHOWSHOW</Text>
-          </TouchableOpacity>
-        <Text style={styles.subtitle}>{this.state.question}</Text>
-        <Text style={styles.subtitle}>{this.state.answer}</Text>
         </View>
       </View>
     );
@@ -74,7 +72,7 @@ const styles = StyleSheet.create({
     paddingTop: 100,
   },
   contentContainer: {
-    //paddingTop: 250,
+    paddingTop: 250,
     alignItems: 'center',
   },  
   title: {
@@ -107,3 +105,14 @@ const styles = StyleSheet.create({
     textAlign:'center',
   }
 });
+
+function mapStateToProps (state) {
+  const myDeck = state.currentDeck
+  const myScore = state.score
+  return {
+    myDeck: myDeck,
+    myScore: myScore,
+  }
+} 
+
+export default connect(mapStateToProps)(QuestionScreen)

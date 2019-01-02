@@ -14,8 +14,11 @@ import { MonoText } from '../components/StyledText';
 import Deck from '../components/Deck'
 import { HeaderBackButton } from 'react-navigation';
 import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
+import { addCard } from '../utils/api'
+import { createCard } from '../actions'
+import { connect } from 'react-redux'
 
-export default class AddCardScreen extends React.Component {
+class AddCardScreen extends React.Component {
   
   static navigationOptions = ({navigate, navigation}) => ({ 
     title: 'Spanish',
@@ -27,14 +30,23 @@ export default class AddCardScreen extends React.Component {
     answer: '',
   }
 
-  add = () => {
+  add = (e) => {
+    e.preventDefault()
+
     let card = {
       question: this.state.question,
       answer: this.state.answer,
     }
-    AsyncStorage.setItem('card', JSON.stringify(card))
 
-    this.props.navigation.navigate('Decks')
+    const deckKey = this.props.myDeck.key
+    
+    this.props.dispatch(createCard(card, deckKey))
+
+    addCard(card, deckKey)
+
+    this.setState({question: '', answer: ''})
+
+    this.props.navigation.navigate('Deck')
   }
 
   render() {
@@ -121,3 +133,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
 });
+
+function mapStateToProps (state) {
+  const myDeck = state.currentDeck
+  return {
+    myDeck: myDeck
+  }
+} 
+
+export default connect(mapStateToProps)(AddCardScreen)

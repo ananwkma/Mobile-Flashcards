@@ -9,15 +9,15 @@ import {
   Button
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
 import { MonoText } from '../components/StyledText';
 import Deck from '../components/Deck'
-
 import { HeaderBackButton } from 'react-navigation';
-
 import { white, lightBlue, darkBlue, darkGray } from '../utils/colors'
+import { connect } from 'react-redux'
+import { initScore } from '../utils/api'
+import { initializeScore } from '../actions'
 
-export default class ResultsScreen extends React.Component {
+class ResultsScreen extends React.Component {
 
   static navigationOptions = ({navigate, navigation}) => ({ 
     title: 'Spanish',
@@ -25,6 +25,12 @@ export default class ResultsScreen extends React.Component {
   });
 
   restart = () => {
+    score = {
+      cardIdx: 0,
+      correct: 0,
+    }
+    this.props.dispatch(initializeScore({ score }))
+    initScore({ score })
     this.props.navigation.navigate('Question')
   }  
 
@@ -33,9 +39,11 @@ export default class ResultsScreen extends React.Component {
   }
 
   render() {
+    const curDeck = this.props.myDeck
+    const curScore = this.props.myScore
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>You got 28/30 correct</Text>
+        <Text style={styles.title}>You got {curScore.score.correct}/{curDeck.cards.length} correct</Text>
         <View style={styles.contentContainer}>
           <TouchableOpacity
             style={styles.button}
@@ -99,3 +107,14 @@ const styles = StyleSheet.create({
     textAlign:'center',
   }
 });
+
+function mapStateToProps (state) {
+  const myDeck = state.currentDeck
+  const myScore = state.score
+  return {
+    myDeck: myDeck,
+    myScore: myScore,
+  }
+} 
+
+export default connect(mapStateToProps)(ResultsScreen)

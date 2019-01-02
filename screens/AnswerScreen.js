@@ -8,33 +8,53 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
 import { MonoText } from '../components/StyledText';
 import Deck from '../components/Deck'
 import { HeaderBackButton } from 'react-navigation';
-
 import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
+import { connect } from 'react-redux'
+import { incrementScore } from '../actions'
+import { updateScore } from '../utils/api'
 
-export default class AnswerScreen extends React.Component {
+class AnswerScreen extends React.Component {
 
   static navigationOptions = ({navigate, navigation}) => ({ 
     title: 'Spanish',
     headerLeft: <HeaderBackButton title="Deck" onPress={()=>{ navigation.navigate('Deck'); }} />,
   });
 
-  answer = () => {
-    this.props.navigation.navigate('Results')
+  handleCorrect = () => {
+    this.answer(1)
+  }
+
+  handleIncorrect = () => {
+    this.answer(0)
+  }
+
+  answer = (value) => {
+    console.log('value', value)
+    const curDeck = this.props.myDeck
+    const curScore = this.props.myScore
+    //code to update this.props.score.correct
+    this.props.dispatch(incrementScore({
+      value
+    }))
+    updateScore(value)
+    if(curDeck.cards.length === curScore.score.cardIdx+1) this.props.navigation.navigate('Results')
+    else this.props.navigation.navigate('Question')
   }
 
   render() {
+    const curDeck = this.props.myDeck
+    const curScore = this.props.myScore
     return (
       <View style={styles.container}>
-        <Text style={styles.subtitle}>1/30</Text>
-        <Text style={styles.title}>Camisa</Text>
+        <Text style={styles.subtitle}>{curScore.score.cardIdx+1}/{curDeck.cards.length}</Text>
+        <Text style={styles.title}>{curDeck.cards[curScore.score.cardIdx].answer}</Text>
         <View style={styles.contentContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={this.answer}
+            onPress={this.handleCorrect}
             title="Correct"
             color="#fff"
             accessibilityLabel="Correct">
@@ -42,7 +62,7 @@ export default class AnswerScreen extends React.Component {
           </TouchableOpacity>          
           <TouchableOpacity
             style={styles.button}
-            onPress={this.answer}
+            onPress={this.handleIncorrect}
             title="Incorrect"
             color="#fff"
             accessibilityLabel="Incorrect">
@@ -94,3 +114,15 @@ const styles = StyleSheet.create({
     textAlign:'center',
   }
 });
+
+function mapStateToProps (state) {
+  const myDeck = state.currentDeck
+  const myScore = state.score
+  console.log('thescore ', myScore)
+  return {
+    myDeck: myDeck,
+    myScore: myScore,
+  }
+} 
+
+export default connect(mapStateToProps)(AnswerScreen)
