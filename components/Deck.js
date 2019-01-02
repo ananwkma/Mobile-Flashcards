@@ -71,13 +71,9 @@ const styles = StyleSheet.create({
 function mapStateToProps (state) {
   const deckList = state.decks
   const deckListArray = Object.values(deckList)
-  const deckNames = deckListArray.map((d) => d.deckName)
-  let keyArray = Object.keys(deckList)
   console.log('whatswrongwithmydecks ', deckList)
   return {
     rawObject: deckListArray,
-    nameArray: deckNames,
-    keyArray: keyArray,
   }
 } 
 

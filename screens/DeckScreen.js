@@ -13,13 +13,21 @@ import Deck from '../components/Deck'
 import { HeaderBackButton } from 'react-navigation';
 import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
 import { connect } from 'react-redux'
-import { removeEntry, initScore } from '../utils/api'
-import { initializeScore } from '../actions'
+import { removeEntry, initScore, setCurrentDeck } from '../utils/api'
+import { initializeScore, setDeck } from '../actions'
 
 class DeckScreen extends React.Component {
   
   state = {
     curDeck: this.props.myDeck
+  }
+
+  componentDidMount() {
+    const key = this.props.myDeck.key
+    const myDeck = this.props.rawObject.find(item => item.key === key)
+    this.props.dispatch(setDeck(myDeck))
+    setCurrentDeck({ key })
+    this.setState({curDeck: myDeck})
   }
 
   static navigationOptions = ({navigate, navigation}) => ({ 
@@ -34,7 +42,6 @@ class DeckScreen extends React.Component {
     }
     this.props.dispatch(initializeScore({ score }))
     initScore({ score })
-    console.log('lalala',this.state.curDeck.cards.length)
     if(this.state.curDeck.cards.length !== 0)this.props.navigation.navigate('Question')
   }
 
@@ -48,8 +55,6 @@ class DeckScreen extends React.Component {
   }
 
   render() {
-    //const curDeck = this.props.myDeck
-    //console.log('decklength ', this.state.curDeck)
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{this.state.curDeck.deckName}</Text>
@@ -127,8 +132,13 @@ const styles = StyleSheet.create({
 
 function mapStateToProps (state) {
   const myDeck = state.currentDeck
+  const deckList = state.decks
+  const deckListArray = Object.values(deckList)
+  //const myDeck = this.props.rawObject.find(item => item.key === key)
+  console.log('deckcheck ', myDeck)
   return {
-    myDeck: myDeck
+    myDeck: myDeck,
+    rawObject: deckListArray,
   }
 } 
 
