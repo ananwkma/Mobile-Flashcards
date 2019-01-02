@@ -27,7 +27,7 @@ class AddDeckScreen extends React.Component {
 
   submit = () => {
     const entry = this.state
-    const key = this.state.key
+    let key = this.state.key
 
     this.props.dispatch(addDeck({
       [key]: this.state
@@ -35,7 +35,9 @@ class AddDeckScreen extends React.Component {
 
     submitEntry({ key, entry })
 
-    this.setState({deckName: '', key: ''})
+    key = timeToString()
+
+    this.setState({deckName: '', key: key})
 
     this.props.navigation.navigate('Decks')
   }
@@ -59,7 +61,6 @@ class AddDeckScreen extends React.Component {
           accessibilityLabel="Create Deck">
           <Text style={styles.submitText}>Create Deck</Text>
         </TouchableOpacity>
-        <Text style={styles.title}>{this.state.deckName}</Text>
       </View>
     );
   }

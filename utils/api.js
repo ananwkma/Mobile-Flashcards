@@ -21,11 +21,12 @@ export function submitEntry ({ entry, key }) {
 }
 
 export function removeEntry (key) {
+  //return AsyncStorage.clear()
   return AsyncStorage.getItem(DECKS_KEY)
     .then((results) => {
       const data = JSON.parse(results)
       data[key] = undefined
       delete data[key]
       AsyncStorage.setItem(DECKS_KEY, JSON.stringify(data))
-    })
+  })
 }

@@ -13,6 +13,7 @@ import Deck from '../components/Deck'
 import { HeaderBackButton } from 'react-navigation';
 import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
 import { connect } from 'react-redux'
+import { removeEntry } from '../utils/api'
 
 class DeckScreen extends React.Component {
   
@@ -30,6 +31,7 @@ class DeckScreen extends React.Component {
   }
 
   deleteDeck = () => {
+    removeEntry(this.props.myDeck.key)
     this.props.navigation.navigate('Decks')
   }
 

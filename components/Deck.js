@@ -5,7 +5,7 @@ import { withNavigation } from 'react-navigation';
 import { white, lightGray, black, gray } from '../utils/colors'
 import { connect } from 'react-redux'
 import { setDeck, removeDeck } from '../actions'
-import { removeEntry, setCurrentDeck } from '../utils/api'
+import { setCurrentDeck } from '../utils/api'
 
 class Deck extends React.Component {
 
@@ -14,10 +14,6 @@ class Deck extends React.Component {
     this.props.dispatch(setDeck(myDeck))
     setCurrentDeck({ key })
     this.props.navigation.navigate('Deck')
-  }
-
-  deleteMe = () => {
-    //removeEntry('12/25/2018, 5:40:36 PM')
   }
 
   render() {
@@ -29,13 +25,6 @@ class Deck extends React.Component {
             <Text style={styles.title}>{deck.deckName}</Text>
             <Text style={styles.cards}>{deck.cards.length} Cards</Text>
           </View> 
-          <TouchableOpacity style={styles.delete} onPress={this.deleteMe}>
-                      <View>
-                        <Text>
-                          Delete Me
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
           <View style={styles.arrow}>
             <Icon.Ionicons
               name={'ios-arrow-forward'}
