@@ -2,9 +2,9 @@ import React from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
 import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
 import { HeaderBackButton } from 'react-navigation';
-import { addDeck } from '../actions'
+import { addDeck, setDeck } from '../actions'
 import { timeToString } from '../utils/helpers'
-import { submitEntry } from '../utils/api'
+import { submitEntry, setCurrentDeck } from '../utils/api'
 import { connect } from 'react-redux'
 
 class AddDeckScreen extends React.Component {
@@ -28,18 +28,18 @@ class AddDeckScreen extends React.Component {
   submit = () => {
     const entry = this.state
     let key = this.state.key
-
     this.props.dispatch(addDeck({
       [key]: this.state
     }))
-
     submitEntry({ key, entry })
 
-    key = timeToString()
+    this.props.dispatch(setDeck(entry))
+    setCurrentDeck({ key })
 
+    key = timeToString()
     this.setState({deckName: '', key: key})
 
-    this.props.navigation.navigate('Decks')
+    this.props.navigation.navigate('Deck')
   }
 
   render() {
@@ -102,8 +102,10 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps (state) {
-
+  const deckList = state.decks
+  const deckListArray = Object.values(deckList)
   return {
+    rawObject: deckListArray,
   }
 } 
 
