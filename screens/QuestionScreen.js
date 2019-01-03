@@ -17,9 +17,13 @@ import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
 import { connect } from 'react-redux'
 
 class QuestionScreen extends React.Component {
+  
+  componentDidMount() {
+    this.props.navigation.setParams({ title: this.props.myDeck.deckName })
+  }
 
- static navigationOptions = ({navigate, navigation}) => ({ 
-    title: 'Spanish',
+  static navigationOptions = ({navigate, navigation}) => ({ 
+    title: typeof(navigation.state.params)==='undefined' ? 'find': navigation.state.params.title,
     headerLeft: <HeaderBackButton title="Deck" onPress={()=>{ navigation.navigate('Deck'); }} />,
   });
 

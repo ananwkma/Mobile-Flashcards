@@ -2,10 +2,11 @@ import React from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
 import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
 import { HeaderBackButton } from 'react-navigation';
-import { addDeck } from '../actions'
+import { addDeck, setDeck } from '../actions'
 import { timeToString } from '../utils/helpers'
-import { submitEntry } from '../utils/api'
+import { submitEntry, setCurrentDeck } from '../utils/api'
 import { connect } from 'react-redux'
+import { KeyboardAvoidingView } from 'react-native';
 
 class AddDeckScreen extends React.Component {
 
@@ -28,40 +29,44 @@ class AddDeckScreen extends React.Component {
   submit = () => {
     const entry = this.state
     let key = this.state.key
-
     this.props.dispatch(addDeck({
       [key]: this.state
     }))
-
     submitEntry({ key, entry })
 
-    key = timeToString()
+    this.props.dispatch(setDeck(entry))
+    setCurrentDeck({ key })
 
+    key = timeToString()
     this.setState({deckName: '', key: key})
 
-    this.props.navigation.navigate('Decks')
+    this.props.navigation.navigate('Deck')
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <Text style={styles.title}>What is the title of your new deck?</Text>
-        <TextInput
-          style={styles.textBox}
-          onChangeText={(deckName) => this.setState({deckName})}
-          value={this.state.deckName}
-          placeholder = "Deck Name"
-          placeholderTextColor = 'rgba(0,0,0,0.4)'
-        />
-        <TouchableOpacity
-          style={styles.submitButton}
-          onPress={this.submit}
-          title="Create Deck"
-          color="#fff"
-          accessibilityLabel="Create Deck">
-          <Text style={styles.submitText}>Create Deck</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.textBoxContainer}>
+          <TextInput
+            style={styles.textBox}
+            onChangeText={(deckName) => this.setState({deckName})}
+            value={this.state.deckName}
+            placeholder = "Deck Name"
+            placeholderTextColor = 'rgba(0,0,0,0.4)'
+          />
+        </View>
+        <View style={styles.submitButtonContainer}>
+          <TouchableOpacity
+            style={styles.submitButton}
+            onPress={this.submit}
+            title="Create Deck"
+            color="#fff"
+            accessibilityLabel="Create Deck">
+            <Text style={styles.submitText}>Create Deck</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -75,6 +80,7 @@ const styles = StyleSheet.create({
   title: {
     color: white,
     fontSize: 30,
+    flex: 1,
     padding: 20,
     textAlign: 'center',
     fontWeight: 'bold',
@@ -99,11 +105,19 @@ const styles = StyleSheet.create({
     color: white,
     textAlign:'center',
   },
+  textBoxContainer: {
+    flex: 1,
+  },
+  submitButtonContainer: {
+    flex: 2,
+  }
 });
 
 function mapStateToProps (state) {
-
+  const deckList = state.decks
+  const deckListArray = Object.values(deckList)
   return {
+    rawObject: deckListArray,
   }
 } 
 

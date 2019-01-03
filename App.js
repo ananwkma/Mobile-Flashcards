@@ -5,8 +5,14 @@ import AppNavigator from './navigation/AppNavigator';
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import { createStore } from 'redux'
+import { setLocalNotification } from './utils/helpers'
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   state = {
     isLoadingComplete: false,
   };

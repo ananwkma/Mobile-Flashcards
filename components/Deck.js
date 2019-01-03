@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, AsyncStorage } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, AsyncStorage, Animated } from 'react-native';
 import { Icon } from 'expo';
 import { withNavigation } from 'react-navigation';
 import { white, lightGray, black, gray } from '../utils/colors'
@@ -8,23 +8,32 @@ import { setDeck, removeDeck } from '../actions'
 import { setCurrentDeck } from '../utils/api'
 
 class Deck extends React.Component {
+  
+  state = {
+    bounceValue: new Animated.Value(1),
+  }
 
-  navDeckScreen = (e,key) => {
+  handleClickDeck = (e,key) => {  
+
     const myDeck = this.props.rawObject.find(item => item.key === key)
     this.props.dispatch(setDeck(myDeck))
     setCurrentDeck({ key })
-    this.props.navigation.navigate('Deck')
+  
+    Animated.sequence([
+      Animated.timing(this.state.bounceValue, { duration: 70, toValue: 1.2}),
+      Animated.spring(this.state.bounceValue, { toValue: 1, bounciness: 10})
+    ]).start(onComplete = () => {this.props.navigation.navigate('Deck')})
   }
 
   render() {
     const myDecks = this.props.rawObject
     return (
       myDecks.map((deck) => (
-        <TouchableOpacity style={styles.container} onPress={(e)=>this.navDeckScreen(e,deck.key)} key={deck.key}>
-          <View>
+        <TouchableOpacity style={styles.container} onPress={(e)=>this.handleClickDeck(e,deck.key)} key={deck.key}>
+          <Animated.View style={[styles.direction, {transform: [{scale: this.state.bounceValue}]}]}>
             <Text style={styles.title}>{deck.deckName}</Text>
-            <Text style={styles.cards}>{/*deck.cards.length*/} Cards</Text>
-          </View> 
+            <Text style={styles.cards}>{deck.cards.length} Cards</Text>
+          </Animated.View> 
           <View style={styles.arrow}>
             <Icon.Ionicons
               name={'ios-arrow-forward'}
