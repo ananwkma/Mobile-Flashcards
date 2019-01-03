@@ -16,8 +16,14 @@ import { white, lightBlue, darkBlue, darkGray } from '../utils/colors'
 import { connect } from 'react-redux'
 import { initScore } from '../utils/api'
 import { initializeScore } from '../actions'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 class ResultsScreen extends React.Component {
+
+  componentDidMount() {
+    clearLocalNotification()
+      .then(setLocalNotification)
+  }
 
   static navigationOptions = ({navigate, navigation}) => ({ 
     title: 'Spanish',

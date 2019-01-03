@@ -17,6 +17,7 @@ import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
 import { addCard } from '../utils/api'
 import { createCard } from '../actions'
 import { connect } from 'react-redux'
+import { KeyboardAvoidingView } from 'react-native';
 
 class AddCardScreen extends React.Component {
   
@@ -51,9 +52,9 @@ class AddCardScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <Text style={styles.title}>Add Card</Text>
-        <View style={styles.contentContainer}>
+        <View style={styles.contentContainer} >
           <TextInput
             style={styles.textBox}
             onChangeText={(question) => this.setState({question})}
@@ -77,7 +78,7 @@ class AddCardScreen extends React.Component {
             <Text style={styles.buttonText}>Add Card</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -89,7 +90,8 @@ const styles = StyleSheet.create({
     paddingTop: 100,
   },
   contentContainer: {
-    paddingTop: 220,
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
   },  
   title: {

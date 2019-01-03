@@ -6,6 +6,7 @@ import { addDeck, setDeck } from '../actions'
 import { timeToString } from '../utils/helpers'
 import { submitEntry, setCurrentDeck } from '../utils/api'
 import { connect } from 'react-redux'
+import { KeyboardAvoidingView } from 'react-native';
 
 class AddDeckScreen extends React.Component {
 
@@ -44,24 +45,28 @@ class AddDeckScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <Text style={styles.title}>What is the title of your new deck?</Text>
-        <TextInput
-          style={styles.textBox}
-          onChangeText={(deckName) => this.setState({deckName})}
-          value={this.state.deckName}
-          placeholder = "Deck Name"
-          placeholderTextColor = 'rgba(0,0,0,0.4)'
-        />
-        <TouchableOpacity
-          style={styles.submitButton}
-          onPress={this.submit}
-          title="Create Deck"
-          color="#fff"
-          accessibilityLabel="Create Deck">
-          <Text style={styles.submitText}>Create Deck</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.textBoxContainer}>
+          <TextInput
+            style={styles.textBox}
+            onChangeText={(deckName) => this.setState({deckName})}
+            value={this.state.deckName}
+            placeholder = "Deck Name"
+            placeholderTextColor = 'rgba(0,0,0,0.4)'
+          />
+        </View>
+        <View style={styles.submitButtonContainer}>
+          <TouchableOpacity
+            style={styles.submitButton}
+            onPress={this.submit}
+            title="Create Deck"
+            color="#fff"
+            accessibilityLabel="Create Deck">
+            <Text style={styles.submitText}>Create Deck</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -75,6 +80,7 @@ const styles = StyleSheet.create({
   title: {
     color: white,
     fontSize: 30,
+    flex: 1,
     padding: 20,
     textAlign: 'center',
     fontWeight: 'bold',
@@ -99,6 +105,12 @@ const styles = StyleSheet.create({
     color: white,
     textAlign:'center',
   },
+  textBoxContainer: {
+    flex: 1,
+  },
+  submitButtonContainer: {
+    flex: 2,
+  }
 });
 
 function mapStateToProps (state) {
