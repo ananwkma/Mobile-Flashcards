@@ -1,4 +1,4 @@
-import { SET_DECK, } from '../actions'
+import { SET_DECK, REMOVE_DECK } from '../actions'
 
 function currentDeck (state = [], action) {
 	switch (action.type) {
@@ -7,6 +7,11 @@ function currentDeck (state = [], action) {
 				...state,
 				...action.deck
 			}
+		case REMOVE_DECK : {
+			return {
+				
+			}
+		}
 		default :
 			return state
 	}

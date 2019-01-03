@@ -23,7 +23,7 @@ class Deck extends React.Component {
         <TouchableOpacity style={styles.container} onPress={(e)=>this.navDeckScreen(e,deck.key)} key={deck.key}>
           <View>
             <Text style={styles.title}>{deck.deckName}</Text>
-            <Text style={styles.cards}>{deck.cards.length} Cards</Text>
+            <Text style={styles.cards}>{/*deck.cards.length*/} Cards</Text>
           </View> 
           <View style={styles.arrow}>
             <Icon.Ionicons
@@ -71,13 +71,9 @@ const styles = StyleSheet.create({
 function mapStateToProps (state) {
   const deckList = state.decks
   const deckListArray = Object.values(deckList)
-  const deckNames = deckListArray.map((d) => d.deckName)
-  let keyArray = Object.keys(deckList)
   console.log('whatswrongwithmydecks ', deckList)
   return {
     rawObject: deckListArray,
-    nameArray: deckNames,
-    keyArray: keyArray,
   }
 } 
 
