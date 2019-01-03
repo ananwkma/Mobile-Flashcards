@@ -14,7 +14,7 @@ import { HeaderBackButton } from 'react-navigation';
 import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
 import { connect } from 'react-redux'
 import { removeEntry, initScore, setCurrentDeck } from '../utils/api'
-import { initializeScore, setDeck } from '../actions'
+import { initializeScore, setDeck, removeDeck } from '../actions'
 
 class DeckScreen extends React.Component {
   
@@ -50,7 +50,9 @@ class DeckScreen extends React.Component {
   }
 
   deleteDeck = () => {
-    removeEntry(this.props.myDeck.key)
+    const deckKey = this.state.curDeck.key
+    this.props.dispatch(removeDeck(deckKey))
+    //removeEntry(deckKey)
     this.props.navigation.navigate('Decks')
   }
 
@@ -134,8 +136,6 @@ function mapStateToProps (state) {
   const myDeck = state.currentDeck
   const deckList = state.decks
   const deckListArray = Object.values(deckList)
-  //const myDeck = this.props.rawObject.find(item => item.key === key)
-  console.log('deckcheck ', myDeck)
   return {
     myDeck: myDeck,
     rawObject: deckListArray,

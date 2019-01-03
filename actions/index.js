@@ -35,8 +35,6 @@ export function removeDeck (deck) {
 }
 
 export function createCard (card, deck) {
-	console.log('card ', card)
-	console.log('deck', deck)
 	return {
 		type: ADD_CARD,
 		card,

@@ -23,7 +23,7 @@ class Deck extends React.Component {
         <TouchableOpacity style={styles.container} onPress={(e)=>this.navDeckScreen(e,deck.key)} key={deck.key}>
           <View>
             <Text style={styles.title}>{deck.deckName}</Text>
-            <Text style={styles.cards}>{deck.cards.length} Cards</Text>
+            <Text style={styles.cards}>{/*deck.cards.length*/} Cards</Text>
           </View> 
           <View style={styles.arrow}>
             <Icon.Ionicons
