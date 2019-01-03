@@ -23,6 +23,7 @@ class DeckScreen extends React.Component {
   }
 
   componentDidMount() {
+    this.props.navigation.setParams({ title: this.state.curDeck.deckName })
     const key = this.props.myDeck.key
     const myDeck = this.props.rawObject.find(item => item.key === key)
     this.props.dispatch(setDeck(myDeck))
@@ -31,9 +32,10 @@ class DeckScreen extends React.Component {
   }
 
   static navigationOptions = ({navigate, navigation}) => ({ 
-    title: 'Spanish',
+    title: typeof(navigation.state.params)==='undefined' ? 'find': navigation.state.params.title,
     headerLeft: <HeaderBackButton title="Back" onPress={()=>{ navigation.navigate('Decks'); }} />,
   });
+
 
   startQuiz = () => {
     score = {

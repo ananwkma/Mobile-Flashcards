@@ -21,12 +21,13 @@ import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 class ResultsScreen extends React.Component {
 
   componentDidMount() {
+    this.props.navigation.setParams({ title: this.props.myDeck.deckName  })
     clearLocalNotification()
       .then(setLocalNotification)
   }
 
   static navigationOptions = ({navigate, navigation}) => ({ 
-    title: 'Spanish',
+    title: typeof(navigation.state.params)==='undefined' ? 'find': navigation.state.params.title,
     headerLeft: <HeaderBackButton title="Deck" onPress={()=>{ navigation.navigate('Deck'); }} />,
   });
 
