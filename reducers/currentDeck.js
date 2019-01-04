@@ -7,11 +7,6 @@ function currentDeck (state = [], action) {
 				...state,
 				...action.deck
 			}
-		case REMOVE_DECK : {
-			return {
-				
-			}
-		}
 		default :
 			return state
 	}

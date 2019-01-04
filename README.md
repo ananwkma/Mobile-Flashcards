@@ -8,3 +8,4 @@ Run with
 
 Description
 - A mobile flashcard app made with React Native
+- Has been tested for Android and iOS

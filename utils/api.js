@@ -10,8 +10,8 @@ export function getDecks () {
 export function setCurrentDeck ({ key }) {
   return AsyncStorage.getItem(DECKS_KEY)
     .then((results) => {
-      const data = JSON.parse(results)
-      return AsyncStorage.getItem(data[key])
+      const data = JSON.parse(results) 
+      return AsyncStorage.getItem(JSON.stringify(data[key]))
     })
 }
 

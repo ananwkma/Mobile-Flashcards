@@ -18,7 +18,7 @@ Decks.navigationOptions = {
       name={
         Platform.OS === 'ios'
           ? `ios-folder${!focused ? '' : '-open'}`
-          : 'md-folder'
+          : `md-folder${!focused ? '' : '-open'}`
       }
     />
   ),
