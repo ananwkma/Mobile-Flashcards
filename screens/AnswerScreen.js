@@ -56,7 +56,7 @@ class AnswerScreen extends React.Component {
             style={styles.button}
             onPress={this.handleCorrect}
             title="Correct"
-            color="#fff"
+            color={white}
             accessibilityLabel="Correct">
             <Text style={styles.buttonText}>Correct</Text>
           </TouchableOpacity>          
@@ -64,7 +64,7 @@ class AnswerScreen extends React.Component {
             style={styles.button}
             onPress={this.handleIncorrect}
             title="Incorrect"
-            color="#fff"
+            color={white}
             accessibilityLabel="Incorrect">
             <Text style={styles.buttonText}>Incorrect</Text>
           </TouchableOpacity>

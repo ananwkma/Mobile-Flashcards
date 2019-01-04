@@ -13,7 +13,7 @@ import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 import Deck from '../components/Deck'
 import { HeaderBackButton } from 'react-navigation';
-import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
+import { white, lightBlue, darkGray, darkBlue, gray } from '../utils/colors'
 import { addCard } from '../utils/api'
 import { createCard } from '../actions'
 import { connect } from 'react-redux'
@@ -66,20 +66,20 @@ class AddCardScreen extends React.Component {
             onChangeText={(question) => this.setState({question})}
             value={this.state.question}
             placeholder = "Question"
-            placeholderTextColor = 'rgba(0,0,0,0.4)'
+            placeholderTextColor = {gray}
           />
           <TextInput
             style={styles.textBox}
             onChangeText={(answer) => this.setState({answer})}
             value={this.state.answer}
             placeholder = "Answer"
-            placeholderTextColor = 'rgba(0,0,0,0.4)'
+            placeholderTextColor = {gray}
           />
           <TouchableOpacity
             style={styles.button}
             onPress={this.add}
             title="Answer"
-            color="#fff"
+            color={white}
             accessibilityLabel="Answer">
             <Text style={styles.buttonText}>Add Card</Text>
           </TouchableOpacity>

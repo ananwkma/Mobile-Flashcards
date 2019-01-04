@@ -8,15 +8,21 @@ export function getDeckNames (results) {
 }
 
 function setDummyData () {
-  return
+  let dummy = {
+    "test" : {
+      key: "test",
+      cards: [
+        {question: "How do you say shirt?", answer: "Camisa",},
+        {question: "How do you say pants?", answer: "Pantalones"},
+        {question: "How do you say socks?", answer: "Calcetines"},
+      ],
+      deckName: 'Spanish', 
+    }
+  }
+  AsyncStorage.setItem(DECKS_KEY, JSON.stringify(dummy))
+  return dummy
 }
 
 function formatDeckNames (decks) {
-  //const deckList = Object.values(decks)
-  //const numCards = Object.values(decks).cards.length
-  // const deckNames = deckList.map((d) => d.deckName)
-  // console.log('formatdeck', decks)
-  // console.log('deckList ', deckList)
-  // console.log('deckNames ', deckNames)
   return decks
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
-import { white, lightBlue, darkGray, darkBlue } from '../utils/colors'
+import { white, lightBlue, darkGray, darkBlue, gray } from '../utils/colors'
 import { HeaderBackButton } from 'react-navigation';
 import { addDeck, setDeck } from '../actions'
 import { timeToString } from '../utils/helpers'
@@ -58,7 +58,7 @@ class AddDeckScreen extends React.Component {
             onChangeText={(deckName) => this.updateDeckName(deckName)}
             value={this.state.deckName}
             placeholder = "Deck Name"
-            placeholderTextColor = 'rgba(0,0,0,0.4)'
+            placeholderTextColor = {gray}
           />
         </View>
         <View style={styles.submitButtonContainer}>
@@ -66,7 +66,7 @@ class AddDeckScreen extends React.Component {
             style={styles.submitButton}
             onPress={this.submit}
             title="Create Deck"
-            color="#fff"
+            color={white}
             accessibilityLabel="Create Deck">
             <Text style={styles.submitText}>Create Deck</Text>
           </TouchableOpacity>

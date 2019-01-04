@@ -67,7 +67,7 @@ class DeckScreen extends React.Component {
             style={styles.button}
             onPress={this.startQuiz}
             title="Start Quiz"
-            color="#fff"
+            color={white}
             accessibilityLabel="Start Quiz">
             <Text style={styles.buttonText}>Start Quiz</Text>
           </TouchableOpacity> 
@@ -75,14 +75,14 @@ class DeckScreen extends React.Component {
             style={styles.button}
             onPress={this.addCard}
             title="Add Card"
-            color="#fff"
+            color={white}
             accessibilityLabel="Add Card">
             <Text style={styles.buttonText}>Add Card</Text>
           </TouchableOpacity>          
           <TouchableOpacity
             onPress={this.deleteDeck}
             title="Delete Deck"
-            color="#fff"
+            color={white}
             accessibilityLabel="Delete Deck">
             <Text style={styles.deleteButtonText}>Delete Deck</Text>
           </TouchableOpacity>

@@ -55,7 +55,7 @@ class ResultsScreen extends React.Component {
             style={styles.button}
             onPress={this.restart}
             title="Restart Quiz"
-            color="#fff"
+            color={white}
             accessibilityLabel="Restart Quiz">
             <Text style={styles.buttonText}>Restart Quiz</Text>
           </TouchableOpacity>
@@ -63,7 +63,7 @@ class ResultsScreen extends React.Component {
             style={styles.button}
             onPress={this.home}
             title="Back to Deck"
-            color="#fff"
+            color={white}
             accessibilityLabel="Back to Deck">
             <Text style={styles.buttonText}>Back to Deck</Text>
           </TouchableOpacity>

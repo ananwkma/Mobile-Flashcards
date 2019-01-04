@@ -12,7 +12,7 @@ import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 import Deck from '../components/Deck'
 import { HeaderBackButton } from 'react-navigation';
-import { lightBlue} from '../utils/colors'
+import { lightBlue } from '../utils/colors'
 import { receiveDecks } from '../actions'
 import { getDecks } from '../utils/api'
 import { connect } from 'react-redux'
