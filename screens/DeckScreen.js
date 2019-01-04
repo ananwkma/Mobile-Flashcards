@@ -52,9 +52,8 @@ class DeckScreen extends React.Component {
   }
 
   deleteDeck = () => {
-    const deckKey = this.state.curDeck.key
-    this.props.dispatch(removeDeck(deckKey))
-    removeEntry(deckKey)
+    this.props.dispatch(removeDeck(this.state.curDeck.key))
+    removeEntry(this.state.curDeck.key)
     this.props.navigation.navigate('Decks')
   }
 

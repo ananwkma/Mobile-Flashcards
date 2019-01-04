@@ -36,6 +36,8 @@ class AddCardScreen extends React.Component {
   }
 
   add = (e) => {
+
+    if(!this.state.question || !this.state.answer) { return alert("Please Fill the Form") }
     e.preventDefault()
 
     let card = {

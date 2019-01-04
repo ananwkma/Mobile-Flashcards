@@ -46,11 +46,10 @@ class ResultsScreen extends React.Component {
   }
 
   render() {
-    const curDeck = this.props.myDeck
-    const curScore = this.props.myScore
+    const { myDeck, myScore } = this.props
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>You got {curScore.score.correct}/{curDeck.cards.length} correct</Text>
+        <Text style={styles.title}>You got {myScore.score.correct}/{myDeck.cards.length} correct</Text>
         <View style={styles.contentContainer}>
           <TouchableOpacity
             style={styles.button}

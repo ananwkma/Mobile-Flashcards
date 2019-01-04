@@ -26,7 +26,12 @@ class AddDeckScreen extends React.Component {
     this.setState({key: key})
   }
 
+  updateDeckName (deckName) {
+    this.setState({deckName})
+  }
+
   submit = () => {
+    if(!this.state.deckName) { return alert("Add a Deck Name") }
     const entry = this.state
     let key = this.state.key
     this.props.dispatch(addDeck({
@@ -50,7 +55,7 @@ class AddDeckScreen extends React.Component {
         <View style={styles.textBoxContainer}>
           <TextInput
             style={styles.textBox}
-            onChangeText={(deckName) => this.setState({deckName})}
+            onChangeText={(deckName) => this.updateDeckName(deckName)}
             value={this.state.deckName}
             placeholder = "Deck Name"
             placeholderTextColor = 'rgba(0,0,0,0.4)'

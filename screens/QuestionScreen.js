@@ -32,12 +32,11 @@ class QuestionScreen extends React.Component {
   }
 
   render() {
-    const curDeck = this.props.myDeck
-    const curScore = this.props.myScore
+    const { myDeck, myScore } = this.props
     return (
       <View style={styles.container}>
-        <Text style={styles.subtitle}>{curScore.score.cardIdx+1}/{curDeck.cards.length}</Text>
-        <Text style={styles.title}>{curDeck.cards[curScore.score.cardIdx].question}</Text>
+        <Text style={styles.subtitle}>{myScore.score.cardIdx+1}/{myDeck.cards.length}</Text>
+        <Text style={styles.title}>{myDeck.cards[myScore.score.cardIdx].question}</Text>
         <View style={styles.contentContainer}>
           <TouchableOpacity
             style={styles.button}

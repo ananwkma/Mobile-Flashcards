@@ -36,23 +36,21 @@ class AnswerScreen extends React.Component {
   }
 
   answer = (value) => {
-    const curDeck = this.props.myDeck
-    const curScore = this.props.myScore
+    const { myDeck, myScore } = this.props
     this.props.dispatch(incrementScore({
       value
     }))
     updateScore(value)
-    if(curDeck.cards.length === curScore.score.cardIdx+1) this.props.navigation.navigate('Results')
+    if(myDeck.cards.length === myScore.score.cardIdx+1) this.props.navigation.navigate('Results')
     else this.props.navigation.navigate('Question')
   }
 
   render() {
-    const curDeck = this.props.myDeck
-    const curScore = this.props.myScore
+    const { myDeck, myScore } = this.props
     return (
       <View style={styles.container}>
-        <Text style={styles.subtitle}>{curScore.score.cardIdx+1}/{curDeck.cards.length}</Text>
-        <Text style={styles.title}>{curDeck.cards[curScore.score.cardIdx].answer}</Text>
+        <Text style={styles.subtitle}>{myScore.score.cardIdx+1}/{myDeck.cards.length}</Text>
+        <Text style={styles.title}>{myDeck.cards[myScore.score.cardIdx].answer}</Text>
         <View style={styles.contentContainer}>
           <TouchableOpacity
             style={styles.button}
