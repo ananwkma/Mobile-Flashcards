@@ -19,7 +19,7 @@ import { updateScore } from '../utils/api'
 class AnswerScreen extends React.Component {
   
   componentDidMount() {
-    this.props.navigation.setParams({ title: this.props.myDeck.deckName  })
+    this.props.navigation.setParams({ title: this.props.myDeck.deckName })
   }
 
   static navigationOptions = ({navigate, navigation}) => ({ 
