@@ -18,17 +18,12 @@ import { initializeScore, setDeck, removeDeck } from '../actions'
 
 class DeckScreen extends React.Component {
   
-  state = {
-    curDeck: this.props.myDeck
-  }
-
   componentDidMount() {
-    this.props.navigation.setParams({ title: this.state.curDeck.deckName })
+    this.props.navigation.setParams({ title: this.props.myDeck.deckName })
     const key = this.props.myDeck.key
     const myDeck = this.props.rawObject.find(item => item.key === key)
     this.props.dispatch(setDeck(myDeck))
     setCurrentDeck({ key })
-    this.setState({curDeck: myDeck})
   }
 
   static navigationOptions = ({navigate, navigation}) => ({ 
@@ -44,7 +39,7 @@ class DeckScreen extends React.Component {
     }
     this.props.dispatch(initializeScore({ score }))
     initScore({ score })
-    if(this.state.curDeck.cards.length !== 0)this.props.navigation.navigate('Question')
+    if(this.props.myDeck.cards.length !== 0)this.props.navigation.navigate('Question')
   }
 
   addCard = () => {
@@ -52,22 +47,28 @@ class DeckScreen extends React.Component {
   }
 
   deleteDeck = () => {
-    this.props.dispatch(removeDeck(this.state.curDeck.key))
-    removeEntry(this.state.curDeck.key)
+    this.props.dispatch(removeDeck(this.props.myDeck.key))
+    removeEntry(this.props.myDeck.key).then(
+      this.navigateBack
+    )
+  }
+
+  navigateBack = () => {
     this.props.navigation.navigate('Decks')
   }
 
   render() {
+    const { myDeck } = this.props
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>{this.state.curDeck.deckName}</Text>
-        <Text style={styles.subtitle}>{this.state.curDeck.cards.length} Cards</Text>
+        <Text style={styles.title}>{this.props.myDeck.deckName}</Text>
+        <Text style={styles.subtitle}>{(myDeck && myDeck.cards) ? myDeck.cards.length : null} Cards</Text>
         <View style={styles.contentContainer}>          
           <TouchableOpacity
             style={styles.button}
             onPress={this.startQuiz}
             title="Start Quiz"
-            color="#fff"
+            color={white}
             accessibilityLabel="Start Quiz">
             <Text style={styles.buttonText}>Start Quiz</Text>
           </TouchableOpacity> 
@@ -75,14 +76,14 @@ class DeckScreen extends React.Component {
             style={styles.button}
             onPress={this.addCard}
             title="Add Card"
-            color="#fff"
+            color={white}
             accessibilityLabel="Add Card">
             <Text style={styles.buttonText}>Add Card</Text>
           </TouchableOpacity>          
           <TouchableOpacity
             onPress={this.deleteDeck}
             title="Delete Deck"
-            color="#fff"
+            color={white}
             accessibilityLabel="Delete Deck">
             <Text style={styles.deleteButtonText}>Delete Deck</Text>
           </TouchableOpacity>

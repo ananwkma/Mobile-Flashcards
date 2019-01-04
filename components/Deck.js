@@ -4,11 +4,11 @@ import { Icon } from 'expo';
 import { withNavigation } from 'react-navigation';
 import { white, lightGray, black, gray } from '../utils/colors'
 import { connect } from 'react-redux'
-import { setDeck, removeDeck } from '../actions'
-import { setCurrentDeck } from '../utils/api'
+import { setDeck, removeDeck, receiveDecks } from '../actions'
+import { setCurrentDeck, getDecks } from '../utils/api'
 
 class Deck extends React.Component {
-  
+
   state = {
     bounceValue: new Animated.Value(1),
   }
@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
 function mapStateToProps (state) {
   const deckList = state.decks
   const deckListArray = Object.values(deckList)
-  console.log('whatswrongwithmydecks ', deckList)
   return {
     rawObject: deckListArray,
   }

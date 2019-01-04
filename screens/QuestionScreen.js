@@ -42,7 +42,7 @@ class QuestionScreen extends React.Component {
             style={styles.button}
             onPress={this.answer}
             title="Answer"
-            color="#fff"
+            color={white}
             accessibilityLabel="Answer">
             <Text style={styles.buttonText}>Answer</Text>
           </TouchableOpacity>         

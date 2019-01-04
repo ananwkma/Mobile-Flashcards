@@ -1,33 +1,33 @@
 import { RECEIVE_DECKS, ADD_DECK, REMOVE_DECK, ADD_CARD } from '../actions'
 
 function decks (state = [], action) {
-	// console.log('state ', state)
-	// console.log('action ', action)
 	switch (action.type) {
-		case RECEIVE_DECKS :
+		case RECEIVE_DECKS : {
+			if (Object.keys(state).length > Object.keys(action.decks).length) {
+				return {
+					...action.decks
+				}
+			}
 			return {
 				...state,
 				...action.decks
 			}
+		}
 		case ADD_DECK :
 			return {
 				...state,
 				...action.deck
 			}
 		case REMOVE_DECK : {
-			console.log('state ', state[action.deck])
-			//console.log('action ', action.deck)
-			//let a = Object.values(state)
-			let a = Object.assign([], state)
-			console.log('a test', a)
-			let b = a.filter(deck => deck.key !== action.deck)
-			//a.splice(state[action.deck])
-			console.log('b test2', b)
+			const newState = Object.keys(state).reduce((object, key) => {
+			  if (key !== action.deck) {
+			    object[key] = state[key]
+			  }
+			  return object
+			}, {})
+
 			return {
-				...state,
-				b
-				//...state,
-				//delete state[action.deck]
+				...newState
 			}			
 		}
 		case ADD_CARD : {
