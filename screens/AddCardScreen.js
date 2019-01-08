@@ -56,6 +56,14 @@ class AddCardScreen extends React.Component {
     this.props.navigation.navigate('Deck')
   }
 
+  updateQuestion (question) {
+    this.setState({question})
+  }
+
+  updateAnswer (answer) {
+    this.setState({answer})
+  }
+
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -63,14 +71,14 @@ class AddCardScreen extends React.Component {
         <View style={styles.contentContainer} >
           <TextInput
             style={styles.textBox}
-            onChangeText={(question) => this.setState({question})}
+            onChangeText={(question) => this.updateQuestion({question})}
             value={this.state.question}
             placeholder = "Question"
             placeholderTextColor = {gray}
           />
           <TextInput
             style={styles.textBox}
-            onChangeText={(answer) => this.setState({answer})}
+            onChangeText={(answer) => this.updateAnswer({answer})}
             value={this.state.answer}
             placeholder = "Answer"
             placeholderTextColor = {gray}
