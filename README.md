@@ -10,3 +10,6 @@ Description
 - A mobile flashcard app made with React Native
 - Has been tested for Android and iOS
 - Expo documentation: https://docs.expo.io/versions/latest/
+
+Mockup
+- https://github.com/ananwkma/Mobile-Flashcards/blob/master/mockup.pdf
